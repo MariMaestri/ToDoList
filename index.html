@@ -1,54 +1,25 @@
-<!--
-1) Editar um texto (tarefa) já criado e atualizar isso na lista de tarefas do usuário.
-
-2) Criar uma opção (botão ou outra estrutura) que permita o usuário ocultar uma tarefa da lista, mas essa ação só pode ser feita com tarefas na concluídas.
-
-3) Criar uma estrutura de estilização (sem biblioteca adicionais) para deixar a aplicação mais bonita e criativa.
-
-4) Criar um repositório no GitHub e postar os arquivos no repositório e responder esse fórum com o link do seu repositório implementado
-
--->
-
-
-
-
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="style.css">
-        <script src="main.js" defer></script>
-        <title>ToDoList</title>
-    </head>
-    <body>
-        <div class="todo-container">
-            <header>
-                <h2>
-                    Lista de Tarefas
-                </h2>
-            </header>
-            <form id="todo-form">
-                <div id="div_area_nova_tarefa">
-                    <label for="input_nova_tarefa">Digite sua nova tarefa:</label>
-                    <input type="text" id="input_nova_tarefa">
-                    <button onclick="adicionaTarefaNaLista()">+</button>
-                </div>
-                <div id="div_lista_de_tarefas">
-                    <ul id="lista_de_tarefas"> 
-                    </ul>
-                </div>    
-            </form>
-            <form id="edit-form" class="hide">
-                <p>Edite a sua tarefa</p>
-                <div class="forml-control">
-                    <label for="input_nova_tarefa">Digite sua nova tarefa:</label>
-                    <input type="text" id="input_nova_tarefa">
-                    <button onclick="adicionaTarefaNaLista()"><img src="img/feito.png" alt="check" class="img-feito"></button>
-                </div>
-                <button id="cancel-edit-btn">Cancelar</button>
-            </form>
-        </div>
-    </body>
-</html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <input class="input-task" placeholder="Minhas tarefas...">
+        <button class="button-add-task">Adicionar</button>
 
+        <ul class="list-tasks">
+           
+        </ul>
+
+    </div>
+    
+</body>
+<script src="main.js"></script>
+</html>

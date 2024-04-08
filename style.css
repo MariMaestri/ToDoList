@@ -1,84 +1,88 @@
+
 *{
-    padding: 0;
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #333;
-    box-sizing: border-box;
+    padding: 0;
+    box-sizing: 0;
+    font-family: "Lato", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    outline: none;
+      
 }
 
 
+/*body{
+    background: linear-gradient(45deg,#7D525F, #bcd9e5);
 
-body{
-    background-color: #f0ffff;
+}*/
+
+.container{
+    background-color: #d1d1d1;
+    width: 500px;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 100px auto 0;
 }
 
-button{
-    background-color: #F0FFFF;
-    color: black;
-    border: 2px solid #C9DEE6;
-    padding: .3rem .6rem;
-    font-size: 1rem;
-    cursor: pointer;
-    justify-content: center;
-    align-items: center;
-    transition: .4s;
-    border-radius: 7px;
+.input-task{
+    border: none;
+    border-radius: 5px;
+    width: 300px;
+    height: 40px;
+    padding-left: 10px;
 }
-
-button:hover{
-    background-color: #8D748C;
+.button-add-task{
+    border: none;
+    border-radius: 5px;
+    height: 40px;
+    background-color: #003329;
     color: aliceblue;
+    font-size: 17px;
+    padding: 0 15px;
+    float: right;
+    cursor: pointer;
+    font-weight: 800;
 }
 
-.img-feito{
-    width: 10px;
-    height: 10px;    
+.button-add-task:hover{
+    opacity: 0.8;
 }
 
-input, select{
-    padding: .25rem .5rem;
+.button-add-task:active{
+    opacity: 0.6;
 }
 
-.hide{
-    display: none;
+.list-tasks{
+    width: 100%;
+    list-style: none;
+    margin-top: 30px;
 }
 
-/* ToDo header */
-.todo-container{
-    max-width: 450px;
-    margin: 3rem auto;
-    background-color: #C9DEE6;
-    padding: 1.5rem;
-    border-radius: 15px;
-}
-
-.todo-container header{
-    text-align: center;
-    padding: 0 1rem 1rem;
-    border-bottom: 1px solid #ccc;
-}
-
-#edit-form, #todo-form{
-    padding: 1rem;
-    border-bottom: 1px solid #ccc;
-}
-
-#todo-form p,
-#edit-form p{
-    margin-bottom: .5rem;
-    font-weight: bold;
-}
-
-.form-control{
+.task{
+    background-color: #f2f2f2;
+    box-shadow: 1px 4px 10px rgb(0, 0, 0, 0.2);
+    height: 50px;
     display: flex;
+    align-items: center;
+    justify-items: center;
+    padding: 0px 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
 }
 
-.form-control input{
-    margin-right: .3rem;
+img{
+    height: 25px;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    cursor: pointer;
+    padding: 0px 20px;
 }
 
-#cancel-edit-btn{
-    margin-top: 1rem;
+.task:hover img{
+    opacity: 1;
 }
 
-
+.done{
+    background-color: #8fac55;
+    text-decoration: line-through;
+}

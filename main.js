@@ -1,114 +1,60 @@
- //Seleção de elementos
- const todoForm= document.querySelector("#todo-form");
- const todoInput= document.querySelector("#todo-input");
- const todoList= document.querySelector("#todo-list");
- const editForm= document.querySelector("#edit-form");
- const editInput= document.querySelector("#edit-input");
- const cancelEditBtn= document.querySelector("#cancel-edit-input");
+//criando as variaveis e chamando as classes do HTML
+const button = document.querySelector('.button-add-task');
+const input  = document.querySelector('.input-task');
+const listaCompleta = document.querySelector('.list-tasks');
 
- let oldInputValue;
+//criando um array para alocar as tarefas
+let minhaLista = [];
 
- //Funçoes 
- const saveTodo = (text) => {
-   const todo = document.createElement("div")
-   todo.classList.add("todo");
+//criando uma funcao para o botao e chamando a funcao - mostrar tarefa -
+// - push - vai adicionar as tarefas dentro do array
+//limpa o input
+function addNew(){
+    minhaLista.push({
+        tarefa: input.value,
+        concluida: false
+    })
 
-   const todoTitle = document.createElement("h3")
-   todoTitle.innerText = text;
-   todo.appendChild(todoTitle);
+    input.value = ''
 
-   const doneBtn= document.createElement("button");
-   doneBtn.classList.add("finish-todo");
-   //colocar um icone no botao
-   todo.appendChild(doneBtn)
-
-   const editBtn= document.createElement("button");
-   editBtn.classList.add("edit-todo");
-   //colocar um icone no botao
-   todo.appendChild(editBtn)
-  
-   const deleteBtnBtn= document.createElement("button");
-   deleteBtn.classList.add("remove-todo");
-   //colocar um icone no botao
-   todo.appendChild(deleteBtn)
-
-   todoList.appendChild(todo);
-
-   todoInput.value = "";
-   todoInput.focus();
- };
-
-const toggleForms = () =>{
-   editForm.classList.toggle("hide");
-   todoForm.classList.toggle("hide");
-   todoList.classList.toggle("hide")
+    mostrarTarefas()
 };
 
-const updateTodo = (text) => {
+//criando funcao para mostrar as tarefas - 45minutos do video
+//onclick => esta chamando a funcao de deletar uma tarefa 
+function mostrarTarefas(){
+    
+    let novaLi = '';
+    minhaLista.forEach( (item,  index) => {
+        novaLi = novaLi + ` 
+                <li class="task ${item.concluida && "done"}"> 
+                    <img src="img/como.png" alt="tarefa-feita" onclick="concluirTarefa(${index})">
 
-   const todos = document.querySelector(".todo")
+                    <img src="img/bin.png" alt="detelar-tarefa"  onclick="deletarItem(${index})" >
+                
+                    <img src="img/editar.png" alt="editar-tarefa">
+                    
+                    <p>${item.tarefa}</p>
+                </li>
+            `
+    });
 
-   todos.forEach((todo) =>{
-      
-      let todoTitle = todo.querySelector("h3")
+listaCompleta.innerHTML = novaLi
+};
 
-      if(todoTitle.innerText === oldInputValue){
-         todoTitle.innerText = text;
-      }
-   })
+//criando uma funcao para tarefa concluida
+//! - sinal de negaçao
+function concluirTarefa(index){
+    minhaLista[index].concluida = !minhaLista[index].concluida 
+    mostrarTarefas()
+    
+};
 
-}
+//criando a funcao para deletar uma tarefa
+function deletarItem(index){
+    minhaLista.splice(index, 1);
+    mostrarTarefas()
+};
 
- //Eventos
- todoForm.addEventListener("submit", (e)=>{
-   e.preventDefault();
-   const inputValue =  todoInput.value
-
-   if(inputValue){
-      saveTodo(inputValue)
-   }
-
- });
-
- document.addEventListener("click", (e) =>{
-   const targetEl = e.target
-   const parentEl = targetEl.closest("div");
-   let todoTitle;
-
-   if(parentEl && parentEl.querySelector("h3")){
-      todoTitle = parentEl.querySelector("h3").innerText;
-   }
-
-   if(targetEl.classList.conteins("finish-todo")){
-      parentEl.classList.toggle("done");
-   }
-
-   if(targetEl.classList.conataines("remove-todo")){
-      parentEl.remove();
-   }
-
-   if(targetEl.classList.conataines("edit-todo")){
-      toggleForms();
-
-      editInput.value = todoTitle
-      oldInputValue = todoTitle
-   }
- });
-
- cancelEditBtn.addEventListener("click", (e) =>{
-   e.preventDefault()
-
-   toggleForms();
- })
-
- editForm.addEventListener("submit", (e) =>{
-   e.preventDefault()
-
-   const editInputValue = editInput.value
-
-   if(editInputValue){
-      updateTodo(editInputValue)
-   }
-
-   toggleForms()
- })
+//responsavel pelo botao quando o usuario aberta, chamando a funcao - valorDoInput - 
+button.addEventListener('click', addNew);
