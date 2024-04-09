@@ -22,17 +22,18 @@ function addNew(){
 
 //criando funcao para mostrar as tarefas - 45minutos do video
 //onclick => esta chamando a funcao de deletar uma tarefa 
+//forEach => passa por cada item do array
 function mostrarTarefas(){
     
     let novaLi = '';
-    minhaLista.forEach( (item,  index) => {
+    minhaLista.forEach ( (item,  index) => {
         novaLi = novaLi + ` 
                 <li class="task ${item.concluida && "done"}"> 
                     <img src="img/como.png" alt="tarefa-feita" onclick="concluirTarefa(${index})">
 
-                    <img src="img/bin.png" alt="detelar-tarefa"  onclick="deletarItem(${index})" >
+                    <img src="img/bin.png" alt="detelar-tarefa"  onclick="deletarItem(${index})">
                 
-                    <img src="img/editar.png" alt="editar-tarefa">
+                    <img src="img/editar.png" alt="editar-tarefa" onclick="editarItem(${index})">
                     
                     <p>${item.tarefa}</p>
                 </li>
@@ -41,6 +42,12 @@ function mostrarTarefas(){
 
 listaCompleta.innerHTML = novaLi
 };
+
+
+//criando uma funcao para editar a tarefa
+function editarItem(index){
+
+}
 
 //criando uma funcao para tarefa concluida
 //! - sinal de negaçao
