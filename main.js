@@ -10,43 +10,70 @@ let minhaLista = [];
 // - push - vai adicionar as tarefas dentro do array
 //limpa o input
 function addNew(){
+
+    const inputText = document.getElementById('input')
+
     minhaLista.push({
-        tarefa: input.value,
-        concluida: false
+        tarefa: inputText.value,
+        concluida: false,
     })
 
-    input.value = ''
+    inputText.value = ''
 
     mostrarTarefas()
-};
+}
 
 //criando funcao para mostrar as tarefas - 45minutos do video
 //onclick => esta chamando a funcao de deletar uma tarefa 
 //forEach => passa por cada item do array
 function mostrarTarefas(){
-    
     let novaLi = '';
-    minhaLista.forEach ( (item,  index) => {
-        novaLi = novaLi + ` 
-                <li class="task ${item.concluida && "done"}"> 
-                    <img src="img/como.png" alt="tarefa-feita" onclick="concluirTarefa(${index})">
 
-                    <img src="img/bin.png" alt="detelar-tarefa"  onclick="deletarItem(${index})">
-                
-                    <img src="img/editar.png" alt="editar-tarefa" onclick="editarItem(${index})">
-                    
-                    <p>${item.tarefa}</p>
-                </li>
-            `
+        minhaLista.forEach ( (item,  index) => {
+            novaLi = 
+                novaLi + 
+                    ` 
+                        <li class="task ${item.concluida && "done"}"> 
+                            <img src="img/como.png" alt="tarefa-feita" onclick="concluirTarefa(${index})">
+
+                            <img src="img/bin.png" alt="detelar-tarefa"  onclick="deletarItem(${index})">
+                            
+                            <p class="text-tarefa">${item.tarefa}</p>
+                            
+                            <img src="img/editar.png" alt="editar-tarefa" onclick="editarItem(${index})">
+                            <img src="img/ocultar.png" alt="ocultar-tarefa" onclick="ocultarItem(${index})">
+                            
+                        </li>
+                    ` 
+        });
+        
+
+    listaCompleta.innerHTML = novaLi
+    localStorage.setItem('lista', JSON.stringify(minhaLista))
+}
+
+function editarItem(index) {
+    // Obtém a referência à tarefa específica que será editada
+    const taskElement = listaCompleta.children[index];
+
+    // Obtém o texto atual da tarefaS
+    const currentTaskText = taskElement.querySelector('.text-tarefa').textContent;
+
+    // Cria um campo de entrada para edição
+    const inputField = document.createElement('input');
+    inputField.type = 'text';
+    inputField.className = 'edit-input';
+    inputField.value = currentTaskText;
+
+    // Substitui o texto da tarefa pelo campo de entrada
+    taskElement.querySelector('.text-tarefa').replaceWith(inputField);
+
+    // Adiciona um evento para salvar a edição quando o usuário pressionar Enter
+    inputField.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            salvarEdicao(index, inputField.value);
+        }
     });
-
-listaCompleta.innerHTML = novaLi
-};
-
-
-//criando uma funcao para editar a tarefa
-function editarItem(index){
-
 }
 
 //criando uma funcao para tarefa concluida
