@@ -11,10 +11,21 @@
 </head>
 <body>
     <div class="container">
-        <input class="segundotask" id="input" placeholder="Minhas tarefas...">
-        <button class="button-add-task" onclick="addNew()">Adicionar</button>
+        <input class="input-task" id="input" placeholder="Minhas tarefas...">
+        <button class="button-add-task" onclick="ocultarDiv()">Ocultas</button>
+        <button class="button-add-task" onclick="adicionarNovaTarefa()">Adicionar</button>
 
         <ul class="list-tasks">
+           
+        </ul>
+
+    </div>
+
+    <div class="container-ocultas" id="container-ocultas">
+
+        <p>Ocultas</p>
+
+        <ul class="list-tasks-ocultas">
            
         </ul>
 

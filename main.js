@@ -1,94 +1,118 @@
-//criando as variaveis e chamando as classes do HTML
-const button = document.querySelector('.button-add-task');
-const input  = document.querySelector('.input-task');
-const listaCompleta = document.querySelector('.list-tasks');
+const input = document.querySelector('.input-task')
+const listaCompleta = document.querySelector('.list-tasks')
+const listaOculta = document.querySelector('.list-tasks-ocultas')
+const divOculta = document.getElementById('container-ocultas')
+const divOcultaStyle = divOculta.style
+divOculta.style = 'display: none;'
 
-//criando um array para alocar as tarefas
-let minhaLista = [];
+let minhaListaDeItens = []
 
-//criando uma funcao para o botao e chamando a funcao - mostrar tarefa -
-// - push - vai adicionar as tarefas dentro do array
-//limpa o input
-function addNew(){
+function adicionarNovaTarefa() {
 
-    const inputText = document.getElementById('input')
+    if (input.value.trim() == '') {
+        return alert('A tarefa precisa de uma descrição.')
+    }
 
-    minhaLista.push({
-        tarefa: inputText.value,
+    minhaListaDeItens.push({
+        tarefa: input.value,
         concluida: false,
+        oculta: false,
     })
 
-    inputText.value = ''
+    input.value = ''
 
     mostrarTarefas()
 }
 
-//criando funcao para mostrar as tarefas - 45minutos do video
-//onclick => esta chamando a funcao de deletar uma tarefa 
-//forEach => passa por cada item do array
-function mostrarTarefas(){
-    let novaLi = '';
+function mostrarTarefas() {
+    let novaLi = ''
+    let novaLiOculta = ''
 
-        minhaLista.forEach ( (item,  index) => {
-            novaLi = 
-                novaLi + 
-                    ` 
-                        <li class="task ${item.concluida && "done"}"> 
-                            <img src="img/como.png" alt="tarefa-feita" onclick="concluirTarefa(${index})">
+    minhaListaDeItens.forEach((item, posicao) => {
 
-                            <img src="img/bin.png" alt="detelar-tarefa"  onclick="deletarItem(${index})">
-                            
-                            <p class="text-tarefa">${item.tarefa}</p>
-                            
-                            <img src="img/editar.png" alt="editar-tarefa" onclick="editarItem(${index})">
-                            <img src="img/ocultar.png" alt="ocultar-tarefa" onclick="ocultarItem(${index})">
-                            
-                        </li>
-                    ` 
-        });
+        task =
+            `
+
+        <li class="task ${item.concluida && 'done'}">
+            <img src="./img/como.png" alt="check-na-tarefa" onclick="concluirTarefa(${posicao})">
+            <img src="./img/bin.png" alt="tarefa-para-o-lixo" onclick="deletarItem(${posicao})">
+            <p>${item.tarefa}</p>
+            <img src="./img/editar.png" alt="editar-tarefa" onclick="editarItem(${posicao})">
+            <img src="./img/ocultar.png" alt="ocultar-tarefa" onclick="ocultarItem(${posicao})">
+        </li>
         
+        `
+
+        if (item.oculta) {
+            novaLiOculta = novaLiOculta + task
+        } else {
+            novaLi = novaLi + task
+        }
+    })
 
     listaCompleta.innerHTML = novaLi
-    localStorage.setItem('lista', JSON.stringify(minhaLista))
+    listaOculta.innerHTML = novaLiOculta
+
+    localStorage.setItem('lista', JSON.stringify(minhaListaDeItens))
 }
 
-function editarItem(index) {
-    // Obtém a referência à tarefa específica que será editada
-    const taskElement = listaCompleta.children[index];
+function concluirTarefa(posicao) {
+    minhaListaDeItens[posicao].concluida = !minhaListaDeItens[posicao].concluida
 
-    // Obtém o texto atual da tarefaS
-    const currentTaskText = taskElement.querySelector('.text-tarefa').textContent;
-
-    // Cria um campo de entrada para edição
-    const inputField = document.createElement('input');
-    inputField.type = 'text';
-    inputField.className = 'edit-input';
-    inputField.value = currentTaskText;
-
-    // Substitui o texto da tarefa pelo campo de entrada
-    taskElement.querySelector('.text-tarefa').replaceWith(inputField);
-
-    // Adiciona um evento para salvar a edição quando o usuário pressionar Enter
-    inputField.addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-            salvarEdicao(index, inputField.value);
-        }
-    });
+    mostrarTarefas()
 }
 
-//criando uma funcao para tarefa concluida
-//! - sinal de negaçao
-function concluirTarefa(index){
-    minhaLista[index].concluida = !minhaLista[index].concluida 
-    mostrarTarefas()
-    
-};
+function deletarItem(posicao) {
+    minhaListaDeItens.splice(posicao, 1)
 
-//criando a funcao para deletar uma tarefa
-function deletarItem(index){
-    minhaLista.splice(index, 1);
     mostrarTarefas()
-};
+}
 
-//responsavel pelo botao quando o usuario aberta, chamando a funcao - valorDoInput - 
-button.addEventListener('click', addNew);
+function editarItem(posicao) {
+
+    texto = prompt('Nova descrição:').trim()
+
+    if (texto == '' || texto == null) {
+        alert('A tarefa precisa de uma descrição.')
+        editarItem(posicao)
+    } else {
+        minhaListaDeItens[posicao].tarefa = texto
+    }
+
+    mostrarTarefas()
+}
+
+function ocultarItem(posicao) {
+
+    tarefa = minhaListaDeItens[posicao]
+
+    if (tarefa.concluida) {
+        tarefa.oculta = !tarefa.oculta
+    } else {
+        return alert('A tarefa precisa ser concluída para ser ocultada.')
+    }
+
+    mostrarTarefas()
+}
+
+function ocultarDiv() {
+
+    if (divOculta.style.display == 'none') {
+        divOculta.style = divOcultaStyle
+    } else {
+        divOculta.style = 'display: none;'
+    }
+
+}
+
+function recarregarTarefas() {
+    const tarefasDoLocalStorage = localStorage.getItem('lista')
+
+    if (tarefasDoLocalStorage) {
+        minhaListaDeItens = JSON.parse(tarefasDoLocalStorage)
+    }
+
+    mostrarTarefas()
+}
+
+recarregarTarefas()

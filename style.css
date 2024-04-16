@@ -1,5 +1,4 @@
-
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: 0;
@@ -10,12 +9,9 @@
       
 }
 
-
 body{
     background: linear-gradient(45deg,#7D525F, #bcd9e5);
     height: 800px;
-   
-
 }
 
 .container{
@@ -24,16 +20,24 @@ body{
     border-radius: 10px;
     padding: 20px;
     margin: 100px auto 0;
-  
 }
 
-.segundotask{
+.container-ocultas{
+    background-color: #d1d1d1;
+    width: 650px;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 100px auto 0;
+}
+
+.input-task{
     border: none;
     border-radius: 5px;
     width: 300px;
     height: 60px;
     padding-left: 10px;
 }
+
 .button-add-task{
     border: none;
     border-radius: 5px;
@@ -57,6 +61,12 @@ body{
 }
 
 .list-tasks{
+    width: 100%;
+    list-style: none;
+    margin-top: 30px;
+}
+
+.list-tasks-ocultas{
     width: 100%;
     list-style: none;
     margin-top: 30px;
@@ -95,8 +105,4 @@ img{
 .done{
     background-color: #8fac55;
     text-decoration: line-through;
-}
-
-.oculto {
-    display: none;
 }
